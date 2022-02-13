@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "serialport": "^9.2.8"
+    "serialport": "^9.2.8",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "debug": "^4.3.3"
   }
 }
