@@ -135,8 +135,8 @@ port.open(() => {
 
             if (process.env.PRINT_STDOUT === "true") {
 
-                process.stdout.write("\x33c");
-
+                //process.stdout.write("\x33c");
+                console.clear();
                 console.log("Updated: %d", Date.now());
 
                 register.forEach(({ description, value, unit }) => {
