@@ -11,7 +11,8 @@ process.env = Object.assign({
     HTTP_PORT: "8080",
     PRINT_STDOUT: "true",
     DEBUG: "smart-meter",
-    SMART_METER_ID: "1"
+    SMART_METER_ID: "1",
+    MODEL: "sdm72dm-v2"
 }, process.env);
 
 
@@ -31,7 +32,7 @@ if (process.env.NODE_ENV === "development") {
 
 // holding registers
 const registers = new Set();
-require("./registers.js")(registers);
+require(`./registers/${process.env.MODEL}.js`)(registers);
 
 
 const port = new Serialport(process.env.SERIAL_DEVICE, {
@@ -134,7 +135,7 @@ port.open(() => {
 
             if (process.env.PRINT_STDOUT === "true") {
 
-                process.stdout.write("\033c");
+                process.stdout.write("\x33c");
 
                 console.log("Updated: %d", Date.now());
 
