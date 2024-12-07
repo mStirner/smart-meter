@@ -52,7 +52,7 @@ module.exports = (registers) => {
 
     registers.add({
         description: "L3 Ampere",
-        address: Buffer.from([0x00, 0x10]),
+        address: Buffer.from([0x00, 0x0A]),
         value: 0,
         unit: "A",
         key: "CURRENT_L3"
