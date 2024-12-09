@@ -31,5 +31,13 @@ module.exports = (registers) => {
         unit: "Hz",
         key: "FREQUENZ"
     });
+    
+    registers.add({
+        description: "Import active energy",
+        address: Buffer.from([0x00, 0x48]),
+        value: 0,
+        unit: "kWh",
+        key: "ENERGY_TOTAL"
+    });    
 
 };
