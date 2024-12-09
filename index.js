@@ -6,7 +6,6 @@ process.env = Object.assign({
     SERIAL_STOPBITS: "1",
     SERIAL_DATABITS: "8",
     QUERY_INTERVAL: "5000",
-    HTTP_ENABLED: "true",
     HTTP_ADDRESS: "0.0.0.0",
     HTTP_PORT: "8080",
     PRINT_STDOUT: "true",
@@ -16,7 +15,7 @@ process.env = Object.assign({
 }, process.env);
 
 
-const http = require("http");
+//const http = require("http");
 const Serialport = require("serialport");
 const ByteLength = require("@serialport/parser-byte-length");
 const checksum = require("./checksum.js");
@@ -42,17 +41,15 @@ const port = new Serialport(process.env.SERIAL_DEVICE, {
     dataBits: Number(process.env.SERIAL_DATABITS)
 });
 
-const server = http.createServer();
-
 const wss = new WebSocket.WebSocketServer({
-    server
+    port: Number(process.env.HTTP_PORT),
+    host: process.env.HTTP_ADDRESS
 });
 
-if (process.env.HTTP_ENABLED === "true") {
-    server.listen(Number(process.env.HTTP_PORT), process.env.HTTP_ADDRESS, (err) => {
-        debug(err || `HTTP Server listneing on http://${process.env.HTTP_ADDRESS}:${process.env.HTTP_PORT}`);
-    });
-}
+
+wss.once("listening", (err) => {
+    debug(err || `HTTP Server listneing on http://${process.env.HTTP_ADDRESS}:${process.env.HTTP_PORT}`);
+});
 
 wss.on("connection", () => {
     debug("WebSocket client connected");
